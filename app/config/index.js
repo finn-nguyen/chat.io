@@ -1,41 +1,27 @@
 'use strict';
 
 var init = function () {
-
-	if(process.env.NODE_ENV === 'production') {
-		var redisURI 		= require('url').parse(process.env.REDIS_URL);
-		var redisPassword 	= redisURI.auth.split(':')[1];
-		return {
-			db: {
-				username: process.env.dbUsername,
-				password: process.env.dbPassword,
-				host: process.env.dbHost,
-				port: process.env.dbPort,
-				name: process.env.dbName
-			},
-			sessionSecret: process.env.sessionSecret,
-			facebook: {
-				clientID: process.env.facebookClientID,
-				clientSecret: process.env.facebookClientSecret,
-				callbackURL: "/auth/facebook/callback",
-				profileFields: ['id', 'displayName', 'photos']
-			},
-			twitter:{
-				consumerKey: process.env.twitterConsumerKey,
-				consumerSecret: process.env.twitterConsumerSecret,
-				callbackURL: "/auth/twitter/callback",
-				profileFields: ['id', 'displayName', 'photos']
-			},
-			redis: {
-				host: redisURI.hostname,
-				port: redisURI.port,
-				password: redisPassword
-			}
-		}
-	}
-	else {
-		return require('./config.json');
-	}
-}
+  return {
+    dbUrl: process.env.MONGO_DB_URI,
+    sessionSecret: process.env.SESSION_SECRET,
+    facebook: {
+      clientID: process.env.FACEBOOK_CLIENT_ID,
+      clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+      callbackURL: '/auth/facebook/callback',
+      profileFields: ['id', 'displayName', 'photos'],
+    },
+    twitter: {
+      consumerKey: process.env.TWITTER_CONSUMER_KEY,
+      consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
+      callbackURL: '/auth/twitter/callback',
+      profileFields: ['id', 'displayName', 'photos'],
+    },
+    redis: {
+      host: process.env.REDIS_HOST,
+      port: process.env.REDIS_PORT,
+      password: process.env.REDIS_PASSWORD,
+    },
+  };
+};
 
 module.exports = init();
