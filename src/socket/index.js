@@ -1,15 +1,15 @@
-"use strict";
+import http from "http";
+import socketIO from "socket.io";
+import redis from "redis";
+import adapter from "socket.io-redis";
+import Models from "models";
 import config from "config";
-var redis = require("redis").createClient;
-var adapter = require("socket.io-redis");
+import session from "session";
 
-var Room = require("../models/room");
+const redisClient = redis.createClient;
+const { Room } = Models;
 
-/**
- * Encapsulates all code for emitting and listening to socket events
- *
- */
-var ioEvents = function (io) {
+const ioEvents = function (io) {
   // Rooms namespace
   io.of("/rooms").on("connection", function (socket) {
     // Create a new room
@@ -48,7 +48,7 @@ var ioEvents = function (io) {
         if (!room) {
           // Assuming that you already checked in router that chatroom exists
           // Then, if a room doesn't exist here, return an error to inform the client-side.
-          socket.emit("updateUsersList", { error: "Room doesnt exist." });
+          socket.emit("updateUsersList", { error: "Room doesn't exist." });
         } else {
           // Check if user exists in the session
           if (socket.request.session.passport == null) {
@@ -121,9 +121,9 @@ var ioEvents = function (io) {
  * Uses Redis as Adapter for Socket.io
  *
  */
-var init = function (app) {
-  var server = require("http").Server(app);
-  var io = require("socket.io")(server);
+const init = function (app) {
+  const server = http.Server(app);
+  const io = socketIO(server);
 
   // Force Socket.io to ONLY use "websockets"; No Long Polling.
   io.set("transports", ["websocket"]);
@@ -132,8 +132,8 @@ var init = function (app) {
   let port = config.redis.port;
   let host = config.redis.host;
   let password = config.redis.password;
-  let pubClient = redis(port, host, { auth_pass: password });
-  let subClient = redis(port, host, {
+  let pubClient = redisClient(port, host, { auth_pass: password });
+  let subClient = redisClient(port, host, {
     auth_pass: password,
     return_buffers: true,
   });
@@ -141,7 +141,7 @@ var init = function (app) {
 
   // Allow sockets to access session data
   io.use((socket, next) => {
-    require("../session")(socket.request, {}, next);
+    session(socket.request, {}, next);
   });
 
   // Define all Events
