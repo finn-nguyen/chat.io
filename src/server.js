@@ -11,7 +11,7 @@ import logger from "logger";
 
 const app = express();
 const ioServer = socketServer(app);
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 
 logger.info("VIEW: ", path.join(__dirname, "views"));
 
