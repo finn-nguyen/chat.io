@@ -1,18 +1,17 @@
-"use strict";
-import db from "../database";
+import db from "database";
 
-var userModel = db.models.user;
+const userModel = db.models.user;
 
-var create = function (data, callback) {
-  var newUser = new userModel(data);
+const create = function (data, callback) {
+  const newUser = new userModel(data);
   newUser.save(callback);
 };
 
-var findOne = function (data, callback) {
+const findOne = function (data, callback) {
   userModel.findOne(data, callback);
 };
 
-var findById = function (id, callback) {
+const findById = function (id, callback) {
   userModel.findById(id, callback);
 };
 
@@ -21,7 +20,7 @@ var findById = function (id, callback) {
  * This method is used ONLY to find user accounts registered via Social Authentication.
  *
  */
-var findOrCreate = function (data, callback) {
+const findOrCreate = function (data, callback) {
   findOne({ socialId: data.id }, function (err, user) {
     if (err) {
       return callback(err);
@@ -29,7 +28,7 @@ var findOrCreate = function (data, callback) {
     if (user) {
       return callback(err, user);
     } else {
-      var userData = {
+      const userData = {
         username: data.displayName,
         socialId: data.id,
         picture: data.photos[0].value || null,
@@ -54,7 +53,7 @@ var findOrCreate = function (data, callback) {
  * A middleware allows user to get access to pages ONLY if the user is already logged in.
  *
  */
-var isAuthenticated = function (req, res, next) {
+const isAuthenticated = function (req, res, next) {
   if (req.isAuthenticated()) {
     next();
   } else {
@@ -62,7 +61,7 @@ var isAuthenticated = function (req, res, next) {
   }
 };
 
-module.exports = {
+export default {
   create,
   findOne,
   findById,

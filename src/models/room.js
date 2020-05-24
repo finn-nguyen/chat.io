@@ -1,27 +1,26 @@
-"use strict";
 import db from "database";
+import User from "./user";
 
-var roomModel = db.models.room;
-var User = require("./user");
+const roomModel = db.models.room;
 
-var create = function (data, callback) {
-  var newRoom = new roomModel(data);
+const create = function (data, callback) {
+  const newRoom = new roomModel(data);
   newRoom.save(callback);
 };
 
-var find = function (data, callback) {
+const find = function (data, callback) {
   roomModel.find(data, callback);
 };
 
-var findOne = function (data, callback) {
+const findOne = function (data, callback) {
   roomModel.findOne(data, callback);
 };
 
-var findById = function (id, callback) {
+const findById = function (id, callback) {
   roomModel.findById(id, callback);
 };
 
-var findByIdAndUpdate = function (id, data, callback) {
+const findByIdAndUpdate = function (id, data, callback) {
   roomModel.findByIdAndUpdate(id, data, { new: true }, callback);
 };
 
@@ -29,12 +28,12 @@ var findByIdAndUpdate = function (id, data, callback) {
  * Add a user along with the corresponding socket to the passed room
  *
  */
-var addUser = function (room, socket, callback) {
+const addUser = function (room, socket, callback) {
   // Get current user's id
-  var userId = socket.request.session.passport.user;
+  const userId = socket.request.session.passport.user;
 
   // Push a new connection object(i.e. {userId + socketId})
-  var conn = { userId: userId, socketId: socket.id };
+  const conn = { userId: userId, socketId: socket.id };
   room.connections.push(conn);
   room.save(callback);
 };
@@ -43,11 +42,11 @@ var addUser = function (room, socket, callback) {
  * Get all users in a room
  *
  */
-var getUsers = function (room, socket, callback) {
-  var users = [],
+const getUsers = function (room, socket, callback) {
+  const users = [],
     vis = {},
     cunt = 0;
-  var userId = socket.request.session.passport.user;
+  const userId = socket.request.session.passport.user;
 
   // Loop on room's connections, Then:
   room.connections.forEach(function (conn) {
@@ -66,7 +65,7 @@ var getUsers = function (room, socket, callback) {
   // Loop on each user id, Then:
   // Get the user object by id, and assign it to users array.
   // So, users array will hold users' objects instead of ids.
-  var loadedUsers = 0;
+  const loadedUsers = 0;
   users.forEach(function (userId, i) {
     User.findById(userId, function (err, user) {
       if (err) {
@@ -86,9 +85,9 @@ var getUsers = function (room, socket, callback) {
  * Remove a user along with the corresponding socket from a room
  *
  */
-var removeUser = function (socket, callback) {
+const removeUser = function (socket, callback) {
   // Get current user's id
-  var userId = socket.request.session.passport.user;
+  const userId = socket.request.session.passport.user;
 
   find(function (err, rooms) {
     if (err) {
@@ -97,7 +96,7 @@ var removeUser = function (socket, callback) {
 
     // Loop on each room, Then:
     rooms.every(function (room) {
-      var pass = true,
+      const pass = true,
         cunt = 0,
         target = 0;
 
@@ -126,7 +125,7 @@ var removeUser = function (socket, callback) {
   });
 };
 
-module.exports = {
+export default {
   create,
   find,
   findOne,
