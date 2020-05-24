@@ -1,16 +1,10 @@
-"use strict";
+import express from "express";
+import passport from "passport";
 import Models from "models";
 
-var express = require("express");
-var router = express.Router();
-var passport = require("passport");
-
-// var User = require('../models/user');
-// var Room = require('../models/room');
-
+const router = express.Router();
 const { User, Room } = Models;
 
-// Home page
 router.get("/", function (req, res, next) {
   // If user is already logged in, then redirect to rooms page
   if (req.isAuthenticated()) {
@@ -36,7 +30,7 @@ router.post(
 
 // Register via username and password
 router.post("/register", function (req, res, next) {
-  var credentials = {
+  const credentials = {
     username: req.body.username,
     password: req.body.password,
   };
@@ -111,7 +105,7 @@ router.get("/rooms", [
 router.get("/chat/:id", [
   User.isAuthenticated,
   function (req, res, next) {
-    var roomId = req.params.id;
+    const roomId = req.params.id;
     Room.findById(roomId, function (err, room) {
       if (err) throw err;
       if (!room) {
@@ -134,4 +128,4 @@ router.get("/logout", function (req, res, next) {
   res.redirect("/");
 });
 
-module.exports = router;
+export default router;
