@@ -1,32 +1,26 @@
-"use strict";
+import "dotenv/config";
+import express from "express";
+import path from "path";
+import bodyParser from "body-parser";
+import flash from "connect-flash";
+import routes from "routes";
+import session from "session";
+import passport from "auth";
+import socketServer from "socket";
+import logger from "logger";
 
-// Chat application dependencies
-require("dotenv").config();
-var express = require("express");
-var app = express();
-var path = require("path");
-var bodyParser = require("body-parser");
-var flash = require("connect-flash");
+const app = express();
+const ioServer = socketServer(app);
+const port = process.env.PORT || 3000;
 
-// Chat application components
-var routes = require("routes");
-var session = require("session");
-var passport = require("auth");
-var ioServer = require("socket")(app);
-var logger = require("logger");
+logger.info("VIEW: ", path.join(__dirname, "views"));
 
-// Set the port number
-var port = process.env.PORT || 3000;
-
-console.log("VIEW: ", path.join(__dirname, "views"));
-// View engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
-// Middlewares
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static("src/public"));
+app.use(express.static(path.join(__dirname, "public")));
 
 app.use(session);
 app.use(passport.initialize());
@@ -35,9 +29,8 @@ app.use(flash());
 
 app.use("/", routes);
 
-// Middleware to catch 404 errors
 app.use(function (req, res, next) {
-  res.status(404).sendFile(process.cwd() + "/src/views/404.htm");
+  res.status(404).sendFile(path.join(__dirname, "views/404.htm"));
 });
 
 ioServer.listen(port);
