@@ -1,18 +1,14 @@
-"use strict";
-
-var Mongoose = require("mongoose");
+import Mongoose from "mongoose";
 import config from "config";
-console.log({ config });
-var logger = require("logger");
+import logger from "logger";
+import models from "./schemas";
 
-// Connect to the database
-// construct the database URI and encode username and password.
+const dbURI = config.dbUrl;
 
-var dbURI = config.dbUrl;
+logger.info("Mongo init");
 
 Mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true });
 
-// Throw an error if the connection fails
 Mongoose.connection.on("error", function (err) {
   if (err) throw err;
 });
@@ -22,21 +18,7 @@ Mongoose.connection.on("error", function (err) {
 // Use native promises
 Mongoose.Promise = global.Promise;
 
-const user = require("database/schemas/user.js");
-const room = require("database/schemas/room.js");
-
 export default {
   Mongoose,
-  models: {
-    user,
-    room,
-  },
+  models,
 };
-
-// module.exports = {
-//   Mongoose,
-//   models: {
-//     user: require('./schemas/user.js'),
-//     room: require('./schemas/room.js'),
-//   },
-// };
