@@ -1,20 +1,18 @@
-'use strict';
-
-var init = function () {
+const init = function () {
   return {
     dbUrl: process.env.MONGO_DB_URI,
     sessionSecret: process.env.SESSION_SECRET,
     facebook: {
       clientID: process.env.FACEBOOK_CLIENT_ID,
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-      callbackURL: '/auth/facebook/callback',
-      profileFields: ['id', 'displayName', 'photos'],
+      callbackURL: "/auth/facebook/callback",
+      profileFields: ["id", "displayName", "photos"],
     },
     twitter: {
       consumerKey: process.env.TWITTER_CONSUMER_KEY,
       consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
-      callbackURL: '/auth/twitter/callback',
-      profileFields: ['id', 'displayName', 'photos'],
+      callbackURL: "/auth/twitter/callback",
+      profileFields: ["id", "displayName", "photos"],
     },
     redis: {
       host: process.env.REDIS_HOST,
@@ -24,4 +22,4 @@ var init = function () {
   };
 };
 
-module.exports = init();
+export default init();

@@ -1,7 +1,8 @@
 "use strict";
 
 var Mongoose = require("mongoose");
-var config = require("config");
+import config from "config";
+console.log({ config });
 var logger = require("logger");
 
 // Connect to the database
