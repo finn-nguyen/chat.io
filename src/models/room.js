@@ -1,8 +1,8 @@
 "use strict";
-import db from "../database";
+import db from "database";
 
 var roomModel = db.models.room;
-var User = require("../models/user");
+var User = require("./user");
 
 var create = function (data, callback) {
   var newRoom = new roomModel(data);

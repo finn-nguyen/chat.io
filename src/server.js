@@ -9,18 +9,18 @@ var bodyParser = require("body-parser");
 var flash = require("connect-flash");
 
 // Chat application components
-var routes = require("app/routes");
-var session = require("app/session");
-var passport = require("app/auth");
-var ioServer = require("app/socket")(app);
-var logger = require("app/logger");
+var routes = require("routes");
+var session = require("session");
+var passport = require("auth");
+var ioServer = require("socket")(app);
+var logger = require("logger");
 
 // Set the port number
 var port = process.env.PORT || 3000;
 
-console.log("VIEW: ", path.join(__dirname, "app/views"));
+console.log("VIEW: ", path.join(__dirname, "views"));
 // View engine setup
-app.set("views", path.join(__dirname, "app/views"));
+app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
 // Middlewares
@@ -37,7 +37,7 @@ app.use("/", routes);
 
 // Middleware to catch 404 errors
 app.use(function (req, res, next) {
-  res.status(404).sendFile(process.cwd() + "/src/app/views/404.htm");
+  res.status(404).sendFile(process.cwd() + "/src/views/404.htm");
 });
 
 ioServer.listen(port);

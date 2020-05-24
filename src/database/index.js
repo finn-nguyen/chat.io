@@ -1,8 +1,8 @@
 "use strict";
 
-var config = require("app/config");
 var Mongoose = require("mongoose");
-var logger = require("app/logger");
+var config = require("config");
+var logger = require("logger");
 
 // Connect to the database
 // construct the database URI and encode username and password.
@@ -21,8 +21,8 @@ Mongoose.connection.on("error", function (err) {
 // Use native promises
 Mongoose.Promise = global.Promise;
 
-const user = require("app/database/schemas/user.js");
-const room = require("app/database/schemas/room.js");
+const user = require("database/schemas/user.js");
+const room = require("database/schemas/room.js");
 
 export default {
   Mongoose,
