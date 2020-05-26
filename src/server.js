@@ -1,36 +1,17 @@
-import "dotenv/config";
-import express from "express";
-import path from "path";
-import bodyParser from "body-parser";
-import flash from "connect-flash";
-import routes from "routes";
-import session from "session";
-import passport from "auth";
-import socketServer from "socket";
-import logger from "logger";
+import 'dotenv/config';
+import app from 'app';
+import config from 'config';
+import logger from 'logger';
+import createHttpServer from 'httpServer';
+import createSocketServer from 'socketServer';
 
-const app = express();
-const ioServer = socketServer(app);
-const port = process.env.PORT || 5000;
+const httpServer = createHttpServer(app);
+const socketServer = createSocketServer(app);
 
-logger.info("VIEW: ", path.join(__dirname, "views"));
-
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "ejs");
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, "public")));
-
-app.use(session);
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(flash());
-
-app.use("/", routes);
-
-app.use(function (req, res, next) {
-  res.status(404).sendFile(path.join(__dirname, "views/404.htm"));
+httpServer.listen(config.httpPort, () => {
+  logger.info(`Http server is listening at port ${config.httpPort}`);
 });
 
-ioServer.listen(port);
+socketServer.listen(config.socketPort, () => {
+  logger.info(`Socket server is listening at port ${config.socketPort}`);
+});
