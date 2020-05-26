@@ -5,7 +5,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/server.js",
-    "dev": "nodemon --exec babel-node src/server.js"
+    "dev": "nodemon --exec babel-node src/server.js",
+    "db:migrate": "sequelize db:migrate",
+    "db:migrate:undo": "sequelize db:migrate:undo",
+    "db:seed": "sequelize db:seed:all"
   },
   "repository": {
     "url": "git+https://github.com/OmarElGabry/chat.io.git",
@@ -28,11 +31,13 @@
     "express-session": "^1.14.0",
     "http-status-codes": "^1.4.0",
     "mongoose": "^5.0.17",
+    "mysql2": "^2.1.0",
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",
     "passport-local": "^1.0.0",
     "passport-twitter": "^1.0.4",
     "redis": "^2.6.2",
+    "sequelize": "^5.21.10",
     "socket.io": "^2.0.3",
     "socket.io-redis": "^5.1.0",
     "winston": "^2.2.0"
@@ -44,6 +49,7 @@
     "@babel/plugin-transform-modules-commonjs": "^7.9.6",
     "@babel/preset-env": "^7.9.6",
     "babel-plugin-module-resolver": "^4.0.0",
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.4",
+    "sequelize-cli": "^5.5.1"
   }
 }
