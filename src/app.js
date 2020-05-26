@@ -6,6 +6,7 @@ import routes from 'routes';
 import session from 'session';
 import passport from 'auth';
 import logger from 'logger';
+import errorHandler from 'middleware/error-handler';
 
 const app = express();
 
@@ -25,8 +26,10 @@ app.use(flash());
 
 app.use('/', routes);
 
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
   res.status(404).sendFile(path.join(__dirname, 'views/404.htm'));
 });
+
+app.use(errorHandler);
 
 export default app;
