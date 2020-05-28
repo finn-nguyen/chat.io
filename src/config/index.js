@@ -4,6 +4,7 @@ const init = function () {
     socketPort: process.env.SOCKET_PORT || 5050,
     dbUrl: process.env.MONGO_DB_URI,
     sessionSecret: process.env.SESSION_SECRET,
+    saltRounds: 3,
     facebook: {
       clientID: process.env.FACEBOOK_CLIENT_ID,
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET,

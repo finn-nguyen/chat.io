@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/OmarElGabry/chat.io",
   "dependencies": {
+    "bcrypt": "^4.0.1",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.2",
     "connect-flash": "^0.1.1",

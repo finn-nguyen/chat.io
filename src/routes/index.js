@@ -2,6 +2,7 @@ import express from 'express';
 import passport from 'passport';
 import Models from 'models';
 import Errors from 'utils/errors';
+import authRouter from './auth';
 
 const router = express.Router();
 const { User, Room } = Models;
@@ -129,5 +130,7 @@ router.get('/logout', function (req, res, next) {
 router.get('/error', (req, res, next) => {
   throw new Errors.InternalServer('Internal server error!!!');
 });
+
+router.use('/auth', authRouter);
 
 export default router;

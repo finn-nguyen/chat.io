@@ -6,7 +6,7 @@ const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/config/config.json')[env];
 
-const db = new Sequelize(config.database, config.username, config.password, { ...config, query: { raw: true } });
+const db = new Sequelize(config.database, config.username, config.password, config);
 
 fs.readdirSync(path.join(__dirname, 'models'))
   .filter((file) => {
