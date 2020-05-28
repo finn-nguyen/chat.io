@@ -1,3 +1,3 @@
-import { login, register } from './auth';
+import { login, register, authenticate } from './auth';
 
-export default { login, register };
+export default { login, register, authenticate };
