@@ -12,3 +12,9 @@ export const findById = async (id) => {
 
   return SeqUtils.toJSON(user);
 };
+
+export const findByUsername = async (username) => {
+  const user = await db.User.findOne({ where: { username } });
+
+  return SeqUtils.toJSON(user);
+};

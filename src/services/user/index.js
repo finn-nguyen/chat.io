@@ -1,3 +1,3 @@
-import { createUser, findById } from './user';
+import { create, findById, findByUsername } from './user';
 
-export default { createUser, findById };
+export default { create, findById, findByUsername };

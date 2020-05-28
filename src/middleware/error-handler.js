@@ -1,7 +1,10 @@
 import HttpStatusCode from 'http-status-codes';
+import logger from 'logger';
 
 const errorHandler = (err, req, res, next) => {
   const { statusCode, message } = err;
+
+  logger.error(err);
 
   if (statusCode) {
     return res.status(statusCode).json({
