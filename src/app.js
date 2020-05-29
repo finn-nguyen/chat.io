@@ -1,5 +1,6 @@
 import express from 'express';
 import path from 'path';
+import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import flash from 'connect-flash';
 import routes from 'routes';
@@ -12,6 +13,7 @@ const app = express();
 
 logger.info('VIEW: ', path.join(__dirname, 'views'));
 
+app.use(morgan('tiny'));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
