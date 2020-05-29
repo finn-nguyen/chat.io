@@ -14,7 +14,7 @@ const presence = (fields, data) => () => {
 const isNumber = (field, data) => () => {
   const value = _.get(data, field);
   if (!_.isNumber(value)) {
-    throw new Errors.BadRequest(`${field} is not a number`);
+    throw new Errors.NotFound();
   }
 };
 
