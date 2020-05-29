@@ -3,9 +3,13 @@ import passport from 'passport';
 import Models from 'models';
 import Errors from 'utils/errors';
 import authRouter from './auth';
+import roomRouter from './rooms';
 
 const router = express.Router();
 const { User, Room } = Models;
+
+router.use('/auth', authRouter);
+router.use('/v1/rooms', roomRouter);
 
 router.get('/', function (req, res, next) {
   // If user is already logged in, then redirect to rooms page
@@ -130,7 +134,5 @@ router.get('/logout', function (req, res, next) {
 router.get('/error', (req, res, next) => {
   throw new Errors.InternalServer('Internal server error!!!');
 });
-
-router.use('/auth', authRouter);
 
 export default router;
