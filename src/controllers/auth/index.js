@@ -5,10 +5,16 @@ import transformer from 'transformers/user';
 const register = async (req, res, next) => {
   try {
     const { username, email, password, firstName, lastName } = req.body;
-    const user = await services.Auth.register({ username, email, password, firstName, lastName });
+    const user = await services.Auth.register({
+      username,
+      email,
+      password,
+      firstName,
+      lastName,
+    });
     const transformedUser = transformer.transformUser(user);
 
-    res.json(transformedUser);
+    res.success({ data: transformedUser });
   } catch (err) {
     next(err);
   }
@@ -20,7 +26,7 @@ const login = async (req, res, next) => {
     const user = await services.Auth.login({ username, password });
     const transformedUser = transformer.transformUser(user);
 
-    res.json(transformedUser);
+    res.success({ transformedUser });
   } catch (err) {
     next(err);
   }

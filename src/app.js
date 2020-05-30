@@ -8,6 +8,7 @@ import session from 'session';
 import passport from 'auth';
 import logger from 'logger';
 import errorHandler from 'middleware/error-handler';
+import useResponse from 'middleware/use-response';
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(useResponse());
 app.use(session);
 app.use(passport.initialize());
 app.use(passport.session());
