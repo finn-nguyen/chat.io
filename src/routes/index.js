@@ -61,7 +61,10 @@ router.post('/register', function (req, res, next) {
         } else {
           User.create(credentials, function (err, newUser) {
             if (err) throw err;
-            req.flash('success', 'Your account has been created. Please log in.');
+            req.flash(
+              'success',
+              'Your account has been created. Please log in.'
+            );
             res.redirect('/');
           });
         }

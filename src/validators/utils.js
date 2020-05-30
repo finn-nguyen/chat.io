@@ -21,13 +21,20 @@ export const presence = (fields, data) => () => {
 export const length = (field, data, minLength = 6, maxLength = 50) => () => {
   const length = _.get(data, field).length;
   if (length < minLength || length > maxLength) {
-    throw new Errors.BadRequest(`${field} length is must between ${minLength} and ${maxLength}`);
+    throw new Errors.BadRequest(
+      `${field} length is must between ${minLength} and ${maxLength}`
+    );
   }
 };
 
 export const number = (field, data) => () => {
   const value = _.get(data, field);
-  if (!_.isNumber(value)) {
+  try {
+    const numberValue = Number(value);
+    if (!_.isNumber(numberValue)) {
+      throw new Errors.NotFound();
+    }
+  } catch (err) {
     throw new Errors.NotFound();
   }
 };
