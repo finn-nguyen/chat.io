@@ -32,7 +32,7 @@
     "express-session": "^1.14.0",
     "http-status-codes": "^1.4.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.0.17",
+    "mongoose": "^5.9.16",
     "morgan": "^1.10.0",
     "mysql2": "^2.1.0",
     "passport": "^0.3.2",

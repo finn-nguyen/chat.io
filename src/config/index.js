@@ -2,6 +2,7 @@ const init = function () {
   return {
     httpPort: process.env.HTTP_PORT || 5000,
     socketPort: process.env.SOCKET_PORT || 5050,
+    mongoDBUrl: process.env.MONGO_DB_URI,
     dbUrl: process.env.MONGO_DB_URI,
     sessionSecret: process.env.SESSION_SECRET || 'very-secret',
     saltRounds: 3,
